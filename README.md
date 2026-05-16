@@ -127,25 +127,21 @@ http://localhost:8501
 
 ## Project Structure
 
-autodrive-qa-agent/
-├── agent/
-│   ├── agent.py          # Custom router agent with memory
-│   ├── tools.py          # RAG search, fault decoder, general QA
-│   └── memory.py         # Conversation memory
-├── api/
-│   └── main.py           # FastAPI backend
-├── app/
-│   └── streamlit_app.py  # Streamlit chat UI
-├── data/
-│   ├── raw_docs/         # Toyota Camry PDF
-│   ├── fault_codes/      # OBD-II CSV
-│   └── chromadb/         # Persistent vector store
-├── ingestion/
-│   ├── loader.py         # PDF loader
-│   └── embedder.py       # Embedding pipeline
-├── Dockerfile
-├── docker-compose.yml
-└── requirements.txt
+| File/Folder | Purpose |
+|---|---|
+| `agent/agent.py` | Custom router agent with conversation memory |
+| `agent/tools.py` | RAG search, fault code decoder, general QA tools |
+| `agent/memory.py` | Conversation memory setup |
+| `api/main.py` | FastAPI backend with /chat, /health, /reset endpoints |
+| `app/streamlit_app.py` | Streamlit chat UI |
+| `data/raw_docs/` | Toyota Camry 2022 owner manual PDF |
+| `data/fault_codes/` | OBD-II fault codes CSV |
+| `data/chromadb/` | Persistent ChromaDB vector store |
+| `ingestion/loader.py` | PDF text extraction |
+| `ingestion/embedder.py` | Embedding pipeline |
+| `Dockerfile` | Container definition |
+| `docker-compose.yml` | Multi-container orchestration |
+| `requirements.txt` | Python dependencies |
 
 ---
 
