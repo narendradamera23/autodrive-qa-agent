@@ -17,53 +17,28 @@ An agentic AI system that answers complex automotive questions by reasoning over
 ## Architecture
 
 User Question
-      │
-      ▼
-Streamlit Frontend UI (Port 8501)
-      │
-      ▼
-FastAPI Backend  →  /chat Endpoint (Port 8000)
-      │
-      ▼
-LLM Router Agent (llama3.2)
-Decides which tool to use based on the query
-      │
-      ├──────────────────────────────────────────────┐
-      │                                              │
-      ▼                                              ▼
-
-Fault Code Decoder Tool                      RAG Search Tool
-      │                                              │
-      ▼                                              ▼
-
-CSV Lookup (Pandas)                         ChromaDB Semantic Search
-      │                                              │
-      ▼                                              ▼
-
-llama3.2 Explains Fault Code               Retrieve Top Relevant Chunks
-                                                     │
-                                                     ▼
-
-                                             llama3.2 Synthesizes Answer
-
-
-                    ─────────────────────────────────────
-
-                           General Chat Queries
-                                      │
-                                      ▼
-                            llama3.2 Direct Response
-
-
-                    ─────────────────────────────────────
-
-                                      │
-                                      ▼
-                        Conversation Memory Updated
-                                      │
-                                      ▼
-                           Response Returned to User
-
+↓
+Streamlit UI (port 8501)
+↓
+POST /chat → FastAPI Backend (port 8000)
+↓
+LLM Router (llama3.2) — decides which tool to use
+↓
+┌─────────────────────────────────────┐
+│                                     │
+fault_code              rag_search                general
+│                         │               │
+CSV lookup            ChromaDB          llama3.2
+(pandas)           semantic search      directly
+│                     top 3 chunks         │
+llama3.2                   │                 │
+explains               llama3.2              │
+│                    answers               │
+└─────────────┬───────────────────────────┘
+↓
+Saved to memory
+↓
+Response returned to user
 
 ---
 
