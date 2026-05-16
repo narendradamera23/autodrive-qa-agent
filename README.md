@@ -16,8 +16,6 @@ An agentic AI system that answers complex automotive questions by reasoning over
 
 ## Architecture
 
-## Architecture
-
 ```
 User Question
       ↓
