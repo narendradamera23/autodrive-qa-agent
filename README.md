@@ -16,29 +16,35 @@ An agentic AI system that answers complex automotive questions by reasoning over
 
 ## Architecture
 
+## 🏗️ Architecture
+
+```
 User Question
-↓
+      ↓
 Streamlit UI (port 8501)
-↓
-POST /chat → FastAPI Backend (port 8000)
-↓
-LLM Router (llama3.2) — decides which tool to use
-↓
-┌─────────────────────────────────────┐
-│                                     │
-fault_code              rag_search                general
-│                         │               │
-CSV lookup            ChromaDB          llama3.2
-(pandas)           semantic search      directly
-│                     top 3 chunks         │
-llama3.2                   │                 │
-explains               llama3.2              │
-│                    answers               │
-└─────────────┬───────────────────────────┘
-↓
-Saved to memory
-↓
-Response returned to user
+      ↓
+FastAPI Backend (port 8000) → POST /chat
+      ↓
+LLM Router (llama3.2) — decides which tool
+      ↓
+┌─────────────────────────────────────────┐
+│           │                   │         │
+▼           ▼                   ▼         │
+Fault    RAG Search          General      │
+Code     ChromaDB            llama3.2     │
+Decoder  Semantic Search     Direct       │
+CSV      Top 3 Chunks                     │
+Lookup        │                           │
+│         llama3.2                        │
+▼         Synthesizes                     │
+llama3.2  Answer                          │
+Explains                                  │
+└─────────────────────────────────────────┘
+                    ↓
+         Conversation Memory Updated
+                    ↓
+          Response Returned to User
+```
 
 ---
 
